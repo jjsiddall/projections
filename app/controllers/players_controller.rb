@@ -80,4 +80,14 @@ class PlayersController < ApplicationController
       format.json { head :no_content }
     end
   end
+    # GET /runningbacks
+  def espn
+    player = Player.new
+    @players = player.espnDataPull
+
+    #commented out so that I don't pull all the data again accidentally
+
+    # vehicle = Vehicle.new
+    # @saved_vehicles = vehicle.getAllVehiclesAndBuses
+  end
 end

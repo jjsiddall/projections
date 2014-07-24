@@ -1,6 +1,9 @@
 Projections::Application.routes.draw do
-  resources :players
-
+  resources :players do
+    collection do
+      get 'espn'
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
