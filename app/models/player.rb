@@ -1,0 +1,3 @@
+class Player < ActiveRecord::Base
+  attr_accessible :attempts, :completions, :fpoints, :fumble_recoveries, :interceptions, :kicking_attempts_1_to_39, :kicking_attempts_40_to_49, :kicking_attempts_XP, :kicking_attempts_over_50, :kicking_attempts_total, :kicking_completions_1_to_39, :kicking_completions_40_to_49, :kicking_completions_XP, :kicking_completions_over_50, :kicking_completions_total, :name, :pass_tds, :pass_yards, :picture_url, :points_against, :position, :receiving_tds, :receiving_yards, :receptions, :rush_tds, :rush_yards, :rushes, :sacks, :stat_year, :targets, :team, :yards_against
+end

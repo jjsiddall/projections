@@ -1,0 +1,98 @@
+<%- model_class = Player -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:position) %></th>
+      <th><%= model_class.human_attribute_name(:picture_url) %></th>
+      <th><%= model_class.human_attribute_name(:team) %></th>
+      <th><%= model_class.human_attribute_name(:stat_year) %></th>
+      <th><%= model_class.human_attribute_name(:rushes) %></th>
+      <th><%= model_class.human_attribute_name(:rush_yards) %></th>
+      <th><%= model_class.human_attribute_name(:rush_tds) %></th>
+      <th><%= model_class.human_attribute_name(:targets) %></th>
+      <th><%= model_class.human_attribute_name(:receptions) %></th>
+      <th><%= model_class.human_attribute_name(:receiving_yards) %></th>
+      <th><%= model_class.human_attribute_name(:receiving_tds) %></th>
+      <th><%= model_class.human_attribute_name(:completions) %></th>
+      <th><%= model_class.human_attribute_name(:attempts) %></th>
+      <th><%= model_class.human_attribute_name(:pass_yards) %></th>
+      <th><%= model_class.human_attribute_name(:pass_tds) %></th>
+      <th><%= model_class.human_attribute_name(:interceptions) %></th>
+      <th><%= model_class.human_attribute_name(:sacks) %></th>
+      <th><%= model_class.human_attribute_name(:fumble_recoveries) %></th>
+      <th><%= model_class.human_attribute_name(:points_against) %></th>
+      <th><%= model_class.human_attribute_name(:yards_against) %></th>
+      <th><%= model_class.human_attribute_name(:kicking_attempts_1_to_39) %></th>
+      <th><%= model_class.human_attribute_name(:kicking_completions_1_to_39) %></th>
+      <th><%= model_class.human_attribute_name(:kicking_attempts_40_to_49) %></th>
+      <th><%= model_class.human_attribute_name(:kicking_completions_40_to_49) %></th>
+      <th><%= model_class.human_attribute_name(:kicking_attempts_over_50) %></th>
+      <th><%= model_class.human_attribute_name(:kicking_completions_over_50) %></th>
+      <th><%= model_class.human_attribute_name(:kicking_attempts_total) %></th>
+      <th><%= model_class.human_attribute_name(:kicking_completions_total) %></th>
+      <th><%= model_class.human_attribute_name(:kicking_attempts_XP) %></th>
+      <th><%= model_class.human_attribute_name(:kicking_completions_XP) %></th>
+      <th><%= model_class.human_attribute_name(:fpoints) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @players.each do |player| %>
+      <tr>
+        <td><%= link_to player.id, player_path(player) %></td>
+        <td><%= player.name %></td>
+        <td><%= player.position %></td>
+        <td><%= player.picture_url %></td>
+        <td><%= player.team %></td>
+        <td><%= player.stat_year %></td>
+        <td><%= player.rushes %></td>
+        <td><%= player.rush_yards %></td>
+        <td><%= player.rush_tds %></td>
+        <td><%= player.targets %></td>
+        <td><%= player.receptions %></td>
+        <td><%= player.receiving_yards %></td>
+        <td><%= player.receiving_tds %></td>
+        <td><%= player.completions %></td>
+        <td><%= player.attempts %></td>
+        <td><%= player.pass_yards %></td>
+        <td><%= player.pass_tds %></td>
+        <td><%= player.interceptions %></td>
+        <td><%= player.sacks %></td>
+        <td><%= player.fumble_recoveries %></td>
+        <td><%= player.points_against %></td>
+        <td><%= player.yards_against %></td>
+        <td><%= player.kicking_attempts_1_to_39 %></td>
+        <td><%= player.kicking_completions_1_to_39 %></td>
+        <td><%= player.kicking_attempts_40_to_49 %></td>
+        <td><%= player.kicking_completions_40_to_49 %></td>
+        <td><%= player.kicking_attempts_over_50 %></td>
+        <td><%= player.kicking_completions_over_50 %></td>
+        <td><%= player.kicking_attempts_total %></td>
+        <td><%= player.kicking_completions_total %></td>
+        <td><%= player.kicking_attempts_XP %></td>
+        <td><%= player.kicking_completions_XP %></td>
+        <td><%= player.fpoints %></td>
+        <td><%=l player.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_player_path(player), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      player_path(player),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_player_path,
+            :class => 'btn btn-primary' %>

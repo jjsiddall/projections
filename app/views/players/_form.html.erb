@@ -1,0 +1,200 @@
+<%= form_for @player, :html => { :class => 'form-horizontal' } do |f| %>
+  <div class="control-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :position, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :position, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :picture_url, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :picture_url, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :team, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :team, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :stat_year, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :stat_year, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :rushes, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :rushes, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :rush_yards, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :rush_yards, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :rush_tds, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :rush_tds, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :targets, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :targets, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :receptions, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :receptions, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :receiving_yards, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :receiving_yards, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :receiving_tds, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :receiving_tds, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :completions, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :completions, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :attempts, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :attempts, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :pass_yards, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :pass_yards, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :pass_tds, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :pass_tds, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :interceptions, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :interceptions, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :sacks, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :sacks, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :fumble_recoveries, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :fumble_recoveries, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :points_against, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :points_against, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :yards_against, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :yards_against, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :kicking_attempts_1_to_39, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :kicking_attempts_1_to_39, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :kicking_completions_1_to_39, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :kicking_completions_1_to_39, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :kicking_attempts_40_to_49, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :kicking_attempts_40_to_49, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :kicking_completions_40_to_49, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :kicking_completions_40_to_49, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :kicking_attempts_over_50, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :kicking_attempts_over_50, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :kicking_completions_over_50, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :kicking_completions_over_50, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :kicking_attempts_total, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :kicking_attempts_total, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :kicking_completions_total, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :kicking_completions_total, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :kicking_attempts_XP, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :kicking_attempts_XP, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :kicking_completions_XP, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :kicking_completions_XP, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :fpoints, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :fpoints, :class => 'number_field' %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                players_path, :class => 'btn' %>
+  </div>
+<% end %>

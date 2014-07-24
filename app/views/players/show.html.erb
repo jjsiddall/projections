@@ -1,0 +1,83 @@
+<%- model_class = Player -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+  <dd><%= @player.name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:position) %>:</strong></dt>
+  <dd><%= @player.position %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:picture_url) %>:</strong></dt>
+  <dd><%= @player.picture_url %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:team) %>:</strong></dt>
+  <dd><%= @player.team %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:stat_year) %>:</strong></dt>
+  <dd><%= @player.stat_year %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:rushes) %>:</strong></dt>
+  <dd><%= @player.rushes %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:rush_yards) %>:</strong></dt>
+  <dd><%= @player.rush_yards %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:rush_tds) %>:</strong></dt>
+  <dd><%= @player.rush_tds %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:targets) %>:</strong></dt>
+  <dd><%= @player.targets %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:receptions) %>:</strong></dt>
+  <dd><%= @player.receptions %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:receiving_yards) %>:</strong></dt>
+  <dd><%= @player.receiving_yards %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:receiving_tds) %>:</strong></dt>
+  <dd><%= @player.receiving_tds %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:completions) %>:</strong></dt>
+  <dd><%= @player.completions %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:attempts) %>:</strong></dt>
+  <dd><%= @player.attempts %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:pass_yards) %>:</strong></dt>
+  <dd><%= @player.pass_yards %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:pass_tds) %>:</strong></dt>
+  <dd><%= @player.pass_tds %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:interceptions) %>:</strong></dt>
+  <dd><%= @player.interceptions %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:sacks) %>:</strong></dt>
+  <dd><%= @player.sacks %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:fumble_recoveries) %>:</strong></dt>
+  <dd><%= @player.fumble_recoveries %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:points_against) %>:</strong></dt>
+  <dd><%= @player.points_against %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:yards_against) %>:</strong></dt>
+  <dd><%= @player.yards_against %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:kicking_attempts_1_to_39) %>:</strong></dt>
+  <dd><%= @player.kicking_attempts_1_to_39 %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:kicking_completions_1_to_39) %>:</strong></dt>
+  <dd><%= @player.kicking_completions_1_to_39 %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:kicking_attempts_40_to_49) %>:</strong></dt>
+  <dd><%= @player.kicking_attempts_40_to_49 %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:kicking_completions_40_to_49) %>:</strong></dt>
+  <dd><%= @player.kicking_completions_40_to_49 %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:kicking_attempts_over_50) %>:</strong></dt>
+  <dd><%= @player.kicking_attempts_over_50 %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:kicking_completions_over_50) %>:</strong></dt>
+  <dd><%= @player.kicking_completions_over_50 %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:kicking_attempts_total) %>:</strong></dt>
+  <dd><%= @player.kicking_attempts_total %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:kicking_completions_total) %>:</strong></dt>
+  <dd><%= @player.kicking_completions_total %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:kicking_attempts_XP) %>:</strong></dt>
+  <dd><%= @player.kicking_attempts_XP %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:kicking_completions_XP) %>:</strong></dt>
+  <dd><%= @player.kicking_completions_XP %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:fpoints) %>:</strong></dt>
+  <dd><%= @player.fpoints %></dd>
+</dl>
+
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              players_path, :class => 'btn'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_player_path(@player), :class => 'btn' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              player_path(@player),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>
