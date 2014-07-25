@@ -1,4 +1,4 @@
-<%- model_class = Player -%>
+<% model_class = Player %>
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
@@ -38,6 +38,7 @@
       <th><%= model_class.human_attribute_name(:kicking_attempts_XP) %></th>
       <th><%= model_class.human_attribute_name(:kicking_completions_XP) %></th>
       <th><%= model_class.human_attribute_name(:fpoints) %></th>
+      <th><%= model_class.human_attribute_name(:fumble_lost) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>

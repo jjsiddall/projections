@@ -29,6 +29,9 @@ gem 'jquery-rails'
 
 gem 'nokogiri'
 
+gem "quiet_assets", :group => :development
+gem "better_errors", :group => :development
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
