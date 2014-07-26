@@ -1,49 +1,64 @@
 class Player < ActiveRecord::Base
-  attr_accessible :attempts, :completions, :fpoints, :fumble_recoveries, :interceptions, :kicking_attempts_1_to_39, :kicking_attempts_40_to_49, :kicking_attempts_XP, :kicking_attempts_over_50, :kicking_attempts_total, :kicking_completions_1_to_39, :kicking_completions_40_to_49, :kicking_completions_XP, :kicking_completions_over_50, :kicking_completions_total, :name, :pass_tds, :pass_yards, :picture_url, :points_against, :position, :receiving_tds, :receiving_yards, :receptions, :rush_tds, :rush_yards, :rushes, :sacks, :stat_year, :targets, :team, :yards_against
+  attr_accessible :attempts, :completions, :fpoints, :fumble_recoveries, :fumble_lost, :source, :interceptions, :kicking_attempts_1_to_39, :kicking_attempts_40_to_49, :kicking_attempts_XP, :kicking_attempts_over_50, :kicking_attempts_total, :kicking_completions_1_to_39, :kicking_completions_40_to_49, :kicking_completions_XP, :kicking_completions_over_50, :kicking_completions_total, :name, :pass_tds, :pass_yards, :picture_url, :points_against, :position, :receiving_tds, :receiving_yards, :receptions, :rush_tds, :rush_yards, :rushes, :sacks, :stat_year, :targets, :team, :yards_against
+
+  	def self.to_csv(all_items)
+		CSV.generate do |csv|
+		  csv << column_names
+		  all_items.each do |item|
+		    csv << item.attributes.values_at(*column_names)
+		  end
+		end
+	end
 
 	def espnDataPull
-		# getPlayers("Kickers", 65)
+		# allESPNProjections = Array.new
+		# allESPNProjections.push(*getPlayers("Defenses", 30))	
+		# allESPNProjections.push(*getPlayers("Kickers", 65))	
+		getPlayers("Quarterbacks")
+		getPlayers("Running Backs")
+		getPlayers("Wide Receivers")
+		getPlayers("Tight Ends")
+		getPlayers("Defenses", 30)
+		getPlayers("Kickers", 65)
 		
 		# espnKickers("http://games.espn.go.com/ffl/tools/projections?display=alt&slotCategoryId=17&startIndex=0")
 	end
 
 	def getPlayers(player_type, number_of_players = 80)
 		allPlayers = Array.new
-		(0..number_of_players).each do |i|
+		(0..number_of_players).step(15) do |i|
 			
 			if player_type == "Quarterbacks"
 				puts "*******"
 				puts "Doing QBs"
 				url = 'http://games.espn.go.com/ffl/tools/projections?display=alt&slotCategoryId=0&startIndex='+ i.to_s
-				allPlayers.push(*espnQuarterbacks(url))			
+				espnQuarterbacks(url)			
 			elsif player_type == "Running Backs"
 				puts "*******"
 				puts "Doing RBs"			
 				url = 'http://games.espn.go.com/ffl/tools/projections?display=alt&slotCategoryId=2&startIndex='+ i.to_s
-				allPlayers.push(*espnRunningBacks(url))
+				espnRunningBacks(url)
 			elsif player_type == "Wide Receivers"
 				puts "*******"
 				puts "Doing WRs"			
 				url = 'http://games.espn.go.com/ffl/tools/projections?display=alt&slotCategoryId=4&startIndex='+ i.to_s
-				allPlayers.push(*espnWideReceivers(url))
+				espnWideReceivers(url)
 			elsif player_type == "Tight Ends"
 				puts "*******"
 				puts "Doing TEs"			
 				url = 'http://games.espn.go.com/ffl/tools/projections?display=alt&slotCategoryId=6&startIndex='+ i.to_s
-				allPlayers.push(*espnWideReceivers(url))
+				espnWideReceivers(url)
 			elsif player_type == "Defenses"
 				puts "*******"
 				puts "Doing Defenses"			
 				url = 'http://games.espn.go.com/ffl/tools/projections?display=alt&slotCategoryId=16&startIndex=' + i.to_s
-				allPlayers.push(*espnDefenses(url))
+				espnDefenses(url)
 			elsif player_type == "Kickers"
 				puts "*******"
 				puts "Doing Kickers"			
 				url = 'http://games.espn.go.com/ffl/tools/projections?display=alt&slotCategoryId=17&startIndex=' + i.to_s
-				allPlayers.push(*espnKickers(url))
+				espnKickers(url)
 			end
-
-			i = i + 15
 		end
 		return allPlayers
 	end
@@ -72,6 +87,7 @@ class Player < ActiveRecord::Base
 				player.picture_url = espnPlayer.css("img:nth-child(1)").attribute('src').to_s.split("&")[0]
 
 				#### Year = 2013
+			 	player.source = "ESPN"
 			 	player.stat_year = 2013
 			
 			    player.completions = espnPlayer.css(".playertableStat")[8].text.split("/")[0]
@@ -84,7 +100,7 @@ class Player < ActiveRecord::Base
 			    player.rush_tds = espnPlayer.css(".playertableStat")[14].text
     			player.fpoints = espnPlayer.css(".playertableStat")[15].text
 
-				players << player
+				player.save!
 
 				#### Year = 2014
 				player2 = Player.new
@@ -93,6 +109,7 @@ class Player < ActiveRecord::Base
 				player2.name = player.name
 				player2.picture_url = player.picture_url
 
+			  	player2.source = "ESPN"
 			  	player2.stat_year = 2014
 			    player2.completions = espnPlayer.css(".playertableStat")[16].text.split("/")[0]
 			    player2.attempts = espnPlayer.css(".playertableStat")[16].text.split("/")[1]
@@ -104,7 +121,7 @@ class Player < ActiveRecord::Base
 			    player2.rush_tds = espnPlayer.css(".playertableStat")[22].text
     			player2.fpoints = espnPlayer.css(".playertableStat")[23].text
 
-				players << player2
+				player2.save!
 		    end
 		end 
 		# puts players.count
@@ -134,6 +151,7 @@ class Player < ActiveRecord::Base
 				player.picture_url = espnPlayer.css("img:nth-child(1)").attribute('src').to_s.split("&")[0]
 	
 			# 	#### Year = 2013
+			 	player.source = "ESPN"
 			 	player.stat_year = 2013
 				player.rushes = espnPlayer.css(".playertableStat")[8].text
 				player.rush_yards = espnPlayer.css(".playertableStat")[9].text
@@ -143,7 +161,7 @@ class Player < ActiveRecord::Base
     			player.receiving_tds = espnPlayer.css(".playertableStat")[14].text
     			player.fpoints = espnPlayer.css(".playertableStat")[15].text
 
-				players << player
+				player.save!
 
 			# 	#### Year = 2014
 				player2 = Player.new
@@ -152,6 +170,7 @@ class Player < ActiveRecord::Base
 				player2.name = player.name
 				player2.picture_url = player.picture_url
 
+			 	player2.source = "ESPN"
 			 	player2.stat_year = 2014
 				player2.rushes = espnPlayer.css(".playertableStat")[16].text
 				player2.rush_yards = espnPlayer.css(".playertableStat")[17].text
@@ -161,7 +180,7 @@ class Player < ActiveRecord::Base
     			player2.receiving_tds = espnPlayer.css(".playertableStat")[22].text
     			player2.fpoints = espnPlayer.css(".playertableStat")[23].text
 
-				players << player2
+				player2.save!
 		    end
 		end 
 		# puts players.count
@@ -191,6 +210,7 @@ class Player < ActiveRecord::Base
 				player.picture_url = espnPlayer.css("img:nth-child(1)").attribute('src').to_s.split("&")[0]
 
 				#### Year = 2013
+			 	player.source = "ESPN"
 			 	player.stat_year = 2013
 			    player.targets = espnPlayer.css(".playertableStat")[9].text
 			    player.receptions = espnPlayer.css(".playertableStat")[10].text
@@ -201,7 +221,7 @@ class Player < ActiveRecord::Base
 			    player.rush_tds = espnPlayer.css(".playertableStat")[16].text
     			player.fpoints = espnPlayer.css(".playertableStat")[17].text
 
-				players << player
+				player.save!
 
 				#### Year = 2014
 				player2 = Player.new
@@ -210,6 +230,7 @@ class Player < ActiveRecord::Base
 				player2.name = player.name
 				player2.picture_url = player.picture_url
 
+			  	player2.source = "ESPN"
 			  	player2.stat_year = 2014
 			    player2.targets = espnPlayer.css(".playertableStat")[18].text
 			    player2.receptions = espnPlayer.css(".playertableStat")[19].text
@@ -220,7 +241,7 @@ class Player < ActiveRecord::Base
 			    player2.rush_tds = espnPlayer.css(".playertableStat")[25].text
     			player2.fpoints = espnPlayer.css(".playertableStat")[26].text
 
-				players << player2
+				player2.save!
 		    end
 		end
 		return players 
@@ -249,6 +270,7 @@ class Player < ActiveRecord::Base
 				player.picture_url = espnPlayer.css(".tableBody img").attribute('src').to_s.split("&")[0]
     
 				# #### Year = 2013
+			 	player.source = "ESPN"
 			 	player.stat_year = 2013
 				player.sacks = espnPlayer.css(".playertableStat")[7].text
 				player.interceptions = espnPlayer.css(".playertableStat")[8].text
@@ -258,7 +280,7 @@ class Player < ActiveRecord::Base
 				player.yards_against = espnPlayer.css(".playertableStat")[12].text
 				player.fpoints = espnPlayer.css(".playertableStat")[13].text
 
-				players << player
+				player.save!
 
 				#### Year = 2014
 				player2 = Player.new
@@ -267,6 +289,7 @@ class Player < ActiveRecord::Base
 				player2.name = player.name
 				player2.picture_url = player.picture_url
 
+			  	player2.source = "ESPN"
 			  	player2.stat_year = 2014
 				player2.sacks = espnPlayer.css(".playertableStat")[14].text
 				player2.interceptions = espnPlayer.css(".playertableStat")[15].text
@@ -276,7 +299,7 @@ class Player < ActiveRecord::Base
 				player2.yards_against = espnPlayer.css(".playertableStat")[19].text
 				player2.fpoints = espnPlayer.css(".playertableStat")[20].text
 
-				players << player2
+				player2.save!
 		    end
 		end 
 		return players
@@ -305,6 +328,7 @@ class Player < ActiveRecord::Base
 				player.picture_url = espnPlayer.css("img:nth-child(1)").attribute('src').to_s.split("&")[0]
 
 				#### Year = 2013
+			 	player.source = "ESPN"
 			 	player.stat_year = 2013
 			
 				player.kicking_attempts_1_to_39 = espnPlayer.css(".playertableStat")[6].text.split("/")[1]
@@ -319,7 +343,7 @@ class Player < ActiveRecord::Base
 				player.kicking_completions_XP = espnPlayer.css(".playertableStat")[10].text.split("/")[0]
 				player.fpoints = espnPlayer.css(".playertableStat")[11].text
 
-				players << player
+				player.save!
 
 				#### Year = 2014
 				player2 = Player.new
@@ -328,6 +352,7 @@ class Player < ActiveRecord::Base
 				player2.name = player.name
 				player2.picture_url = player.picture_url
 
+			  	player2.source = "ESPN"
 			  	player2.stat_year = 2014
 				player2.kicking_attempts_1_to_39 = espnPlayer.css(".playertableStat")[12].text.split("/")[1]
 				player2.kicking_completions_1_to_39 = espnPlayer.css(".playertableStat")[12].text.split("/")[0]
@@ -341,7 +366,7 @@ class Player < ActiveRecord::Base
 				player2.kicking_completions_XP = espnPlayer.css(".playertableStat")[16].text.split("/")[0]
 				player2.fpoints = espnPlayer.css(".playertableStat")[17].text
 
-				players << player2
+				player2.save!
 		    end
 		end 
 		return players

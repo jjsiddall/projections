@@ -2,6 +2,7 @@ Projections::Application.routes.draw do
   resources :players do
     collection do
       get 'espn'
+      get :csv
     end
   end
 

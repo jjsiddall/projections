@@ -7,6 +7,14 @@ class PlayersController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @players }
+      format.csv { 
+        send_data(
+          Player.to_csv(@players),
+          :type => 'application/excel',
+          :filename => 'players.csv',
+          :disposition => 'attachment'
+        ) 
+      }
     end
   end
 
