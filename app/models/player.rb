@@ -100,7 +100,7 @@ class Player < ActiveRecord::Base
 			    player.rush_tds = espnPlayer.css(".playertableStat")[14].text
     			player.fpoints = espnPlayer.css(".playertableStat")[15].text
 
-				player.save!
+				player.save
 
 				#### Year = 2014
 				player2 = Player.new
@@ -121,7 +121,7 @@ class Player < ActiveRecord::Base
 			    player2.rush_tds = espnPlayer.css(".playertableStat")[22].text
     			player2.fpoints = espnPlayer.css(".playertableStat")[23].text
 
-				player2.save!
+				player2.save
 		    end
 		end 
 		# puts players.count
@@ -161,7 +161,7 @@ class Player < ActiveRecord::Base
     			player.receiving_tds = espnPlayer.css(".playertableStat")[14].text
     			player.fpoints = espnPlayer.css(".playertableStat")[15].text
 
-				player.save!
+				player.save
 
 			# 	#### Year = 2014
 				player2 = Player.new
@@ -180,7 +180,7 @@ class Player < ActiveRecord::Base
     			player2.receiving_tds = espnPlayer.css(".playertableStat")[22].text
     			player2.fpoints = espnPlayer.css(".playertableStat")[23].text
 
-				player2.save!
+				player2.save
 		    end
 		end 
 		# puts players.count
@@ -221,7 +221,7 @@ class Player < ActiveRecord::Base
 			    player.rush_tds = espnPlayer.css(".playertableStat")[16].text
     			player.fpoints = espnPlayer.css(".playertableStat")[17].text
 
-				player.save!
+				player.save
 
 				#### Year = 2014
 				player2 = Player.new
@@ -241,7 +241,7 @@ class Player < ActiveRecord::Base
 			    player2.rush_tds = espnPlayer.css(".playertableStat")[25].text
     			player2.fpoints = espnPlayer.css(".playertableStat")[26].text
 
-				player2.save!
+				player2.save
 		    end
 		end
 		return players 
@@ -280,7 +280,7 @@ class Player < ActiveRecord::Base
 				player.yards_against = espnPlayer.css(".playertableStat")[12].text
 				player.fpoints = espnPlayer.css(".playertableStat")[13].text
 
-				player.save!
+				player.save
 
 				#### Year = 2014
 				player2 = Player.new
@@ -299,7 +299,7 @@ class Player < ActiveRecord::Base
 				player2.yards_against = espnPlayer.css(".playertableStat")[19].text
 				player2.fpoints = espnPlayer.css(".playertableStat")[20].text
 
-				player2.save!
+				player2.save
 		    end
 		end 
 		return players
@@ -343,7 +343,7 @@ class Player < ActiveRecord::Base
 				player.kicking_completions_XP = espnPlayer.css(".playertableStat")[10].text.split("/")[0]
 				player.fpoints = espnPlayer.css(".playertableStat")[11].text
 
-				player.save!
+				player.save
 
 				#### Year = 2014
 				player2 = Player.new
@@ -366,7 +366,7 @@ class Player < ActiveRecord::Base
 				player2.kicking_completions_XP = espnPlayer.css(".playertableStat")[16].text.split("/")[0]
 				player2.fpoints = espnPlayer.css(".playertableStat")[17].text
 
-				player2.save!
+				player2.save
 		    end
 		end 
 		return players

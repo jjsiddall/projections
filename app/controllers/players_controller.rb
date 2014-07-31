@@ -17,6 +17,22 @@ class PlayersController < ApplicationController
       }
     end
   end
+  def runningbacks
+    @players = Player.where(position: 'RB', stat_year: '2014').order('fpoints desc')
+    # @players = @players
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @players }
+      format.csv { 
+        send_data(
+          Player.to_csv(@players),
+          :type => 'application/excel',
+          :filename => 'players.csv',
+          :disposition => 'attachment'
+        ) 
+      }
+    end
+  end
 
   # GET /players/1
   # GET /players/1.json
@@ -89,10 +105,13 @@ class PlayersController < ApplicationController
     end
   end
     # GET /runningbacks
-  def espn
+  def espn_scrap
+    Player.delete_all
     player = Player.new
-    @players = player.espnDataPull
-
+    player.espnDataPull
+    respond_to do |format|
+      format.html { redirect_to players_url, notice: 'ESPN Players successfully imported' }
+    end
     #commented out so that I don't pull all the data again accidentally
 
     # vehicle = Vehicle.new
