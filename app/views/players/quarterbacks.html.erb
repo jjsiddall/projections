@@ -5,7 +5,7 @@
 %>
 
 <div class="page-header">
-  <h1><%= link_to "Running Backs", runningbacks_players_path(source: source, year: year, format: "csv") %>: <%= year %> <%= source %></h1>
+  <h1><%= link_to "Quarterbacks", quarterbacks_players_path(source: source, year: year, format: "csv") %>: <%= year %> <%= source %></h1>
 </div>
 <%= link_to "<i class='icon-white icon-backward'></i> Home".html_safe, root_path, :class => 'btn btn-mini btn-primary' %>
 <table class="table table-striped">
@@ -16,9 +16,12 @@
       <th>Rushes</th>
       <th>Rush Yards</th>
       <th>Rush TDs</th>
-      <th>Receiving Yards</th>
-      <th>ReceivingTDs</th>
-      <th>Fumbles Lost</th>
+      <th>Completions</th>
+      <th>Attempts</th>
+      <th>Pass Yards</th>
+      <th>Pass TDs</th>
+      <th>Interceptions</th>
+      <th>Fumble Lost</th>
       <th>Points</th>
     </tr>
   </thead>
@@ -30,8 +33,11 @@
         <td><%= player.rushes %></td>
         <td><%= player.rush_yards %></td>
         <td><%= player.rush_tds %></td>
-        <td><%= player.receiving_yards %></td>
-        <td><%= player.receiving_tds %></td>
+        <td><%= player.completions %></td>
+        <td><%= player.attempts %></td>
+        <td><%= player.pass_yards %></td>
+        <td><%= player.pass_tds %></td>
+        <td><%= player.interceptions %></td>
         <td><%= player.fumble_lost %></td>
         <td><%= player.fpoints %></td>
       </tr>

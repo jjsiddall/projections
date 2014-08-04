@@ -2,7 +2,7 @@ class PlayersController < ApplicationController
   # GET /players
   # GET /players.json
   def index
-    @players = Player.all
+    @players = Player.where(source: params[:source].upcase, stat_year: params[:year]).order('fpoints desc')
 
     respond_to do |format|
       format.html # index.html.erb
@@ -17,9 +17,83 @@ class PlayersController < ApplicationController
       }
     end
   end
+  def quarterbacks
+    @players = Player.where(source: params[:source].upcase, position: 'QB', stat_year: params[:year]).order('fpoints desc')
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @players }
+      format.csv { 
+        send_data(
+          Player.to_csv(@players),
+          :type => 'application/excel',
+          :filename => 'players.csv',
+          :disposition => 'attachment'
+        ) 
+      }
+    end
+  end
   def runningbacks
-    @players = Player.where(position: 'RB', stat_year: '2014').order('fpoints desc')
-    # @players = @players
+    @players = Player.where(source: params[:source].upcase, position: 'RB', stat_year: params[:year]).order('fpoints desc')
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @players }
+      format.csv { 
+        send_data(
+          Player.to_csv(@players),
+          :type => 'application/excel',
+          :filename => 'players.csv',
+          :disposition => 'attachment'
+        ) 
+      }
+    end
+  end
+  def widereceivers
+    @players = Player.where(source: params[:source].upcase, position: 'WR', stat_year: params[:year]).order('fpoints desc')
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @players }
+      format.csv { 
+        send_data(
+          Player.to_csv(@players),
+          :type => 'application/excel',
+          :filename => 'players.csv',
+          :disposition => 'attachment'
+        ) 
+      }
+    end
+  end
+  def tightends
+    @players = Player.where(source: params[:source].upcase, position: 'TE', stat_year: params[:year]).order('fpoints desc')
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @players }
+      format.csv { 
+        send_data(
+          Player.to_csv(@players),
+          :type => 'application/excel',
+          :filename => 'players.csv',
+          :disposition => 'attachment'
+        ) 
+      }
+    end
+  end
+  def defenses
+    @players = Player.where(source: params[:source].upcase, position: 'D/ST', stat_year: params[:year]).order('fpoints desc')
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @players }
+      format.csv { 
+        send_data(
+          Player.to_csv(@players),
+          :type => 'application/excel',
+          :filename => 'players.csv',
+          :disposition => 'attachment'
+        ) 
+      }
+    end
+  end
+  def kickers
+    @players = Player.where(source: params[:source].upcase, position: 'K', stat_year: params[:year]).order('fpoints desc')
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @players }
@@ -104,17 +178,22 @@ class PlayersController < ApplicationController
       format.json { head :no_content }
     end
   end
-    # GET /runningbacks
+
+  # scrappers
   def espn_scrap
-    Player.delete_all
+    Player.where(source: "ESPN").delete_all
     player = Player.new
     player.espnDataPull
     respond_to do |format|
-      format.html { redirect_to players_url, notice: 'ESPN Players successfully imported' }
+      format.html { redirect_to root_url, notice: 'ESPN Players successfully imported' }
     end
-    #commented out so that I don't pull all the data again accidentally
-
-    # vehicle = Vehicle.new
-    # @saved_vehicles = vehicle.getAllVehiclesAndBuses
+  end
+  def cbs_scrap
+    Player.where(source: "CBS").delete_all
+    player = Player.new
+    @players = player.cbsDataPull
+    respond_to do |format|
+      format.html { redirect_to root_url, notice: 'CBS Players successfully imported' }
+    end
   end
 end

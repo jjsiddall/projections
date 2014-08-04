@@ -5,7 +5,7 @@
 %>
 
 <div class="page-header">
-  <h1><%= link_to "Running Backs", runningbacks_players_path(source: source, year: year, format: "csv") %>: <%= year %> <%= source %></h1>
+  <h1><%= link_to "Wide Receivers", widereceivers_players_path(source: source, year: year, format: "csv") %>: <%= year %> <%= source %></h1>
 </div>
 <%= link_to "<i class='icon-white icon-backward'></i> Home".html_safe, root_path, :class => 'btn btn-mini btn-primary' %>
 <table class="table table-striped">
@@ -16,9 +16,11 @@
       <th>Rushes</th>
       <th>Rush Yards</th>
       <th>Rush TDs</th>
+      <th>Targets</th>
+      <th>Receptions</th>
       <th>Receiving Yards</th>
-      <th>ReceivingTDs</th>
-      <th>Fumbles Lost</th>
+      <th>Receiving TDs</th>
+      <th>Fumble Lost</th>
       <th>Points</th>
     </tr>
   </thead>
@@ -30,6 +32,8 @@
         <td><%= player.rushes %></td>
         <td><%= player.rush_yards %></td>
         <td><%= player.rush_tds %></td>
+        <td><%= player.targets %></td>
+        <td><%= player.receptions %></td>
         <td><%= player.receiving_yards %></td>
         <td><%= player.receiving_tds %></td>
         <td><%= player.fumble_lost %></td>

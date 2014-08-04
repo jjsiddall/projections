@@ -1,10 +1,17 @@
 Projections::Application.routes.draw do
-  root :to => 'players#index'
+  root :to => 'static#home'
 
   resources :players do
     collection do
       get 'espn_scrap'
+      get 'cbs_scrap'
+
+      get 'quarterbacks'
       get 'runningbacks'
+      get 'widereceivers'
+      get 'tightends'
+      get 'defenses'
+      get 'kickers'
       get :csv
     end
   end

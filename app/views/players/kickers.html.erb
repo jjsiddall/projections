@@ -1,0 +1,48 @@
+<% 
+  model_class = Player 
+  source = params[:source].upcase
+  year = params[:year]
+%>
+
+<div class="page-header">
+  <h1><%= link_to "Kickers", kickers_players_path(source: source, year: year, format: "csv") %>: <%= year %> <%= source %></h1>
+</div>
+<%= link_to "<i class='icon-white icon-backward'></i> Home".html_safe, root_path, :class => 'btn btn-mini btn-primary' %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Team</th>
+      <th>Kicking Attempts 1 to 39</th>
+      <th>Kicking Completions 1 to 39</th>
+      <th>Kicking Attempts 40 to 49</th>
+      <th>Kicking Completions 40 to 49</th>
+      <th>Kicking Attempts Over 50</th>
+      <th>Kicking Completions Over 50</th>
+      <th>Kicking Total Attempts</th>
+      <th>Kicking Total Completions</th>
+      <th>Kicking Attempts XP</th>
+      <th>Kicking Completions XP</th>
+      <th>Points</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @players.each do |player| %>
+      <tr>
+        <td><%= player.name %></td>
+        <td><%= player.team %></td>
+        <td><%= player.kicking_attempts_1_to_39 %></td>
+        <td><%= player.kicking_completions_1_to_39 %></td>
+        <td><%= player.kicking_attempts_40_to_49 %></td>
+        <td><%= player.kicking_completions_40_to_49 %></td>
+        <td><%= player.kicking_attempts_over_50 %></td>
+        <td><%= player.kicking_completions_over_50 %></td>
+        <td><%= player.kicking_attempts_total %></td>
+        <td><%= player.kicking_completions_total %></td>
+        <td><%= player.kicking_attempts_XP %></td>
+        <td><%= player.kicking_completions_XP %></td>
+        <td><%= player.fpoints %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
