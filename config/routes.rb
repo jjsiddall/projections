@@ -5,6 +5,7 @@ Projections::Application.routes.draw do
     collection do
       get 'espn_scrap'
       get 'cbs_scrap'
+      get 'nfl_scrap'
 
       get 'quarterbacks'
       get 'runningbacks'

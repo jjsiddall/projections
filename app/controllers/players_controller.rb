@@ -2,8 +2,12 @@ class PlayersController < ApplicationController
   # GET /players
   # GET /players.json
   def index
-    @players = Player.where(source: params[:source].upcase, stat_year: params[:year]).order('fpoints desc')
-
+    source = params[:source]
+    if source == "ALL"
+      @players = Player.order('fpoints desc')
+    else
+      @players = Player.where(source: params[:source], stat_year: params[:year]).order('fpoints desc')
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @players }
@@ -18,7 +22,12 @@ class PlayersController < ApplicationController
     end
   end
   def quarterbacks
-    @players = Player.where(source: params[:source].upcase, position: 'QB', stat_year: params[:year]).order('fpoints desc')
+    source = params[:source]
+    if source == "ALL"
+      @players = Player.where(position: 'QB').order('fpoints desc')
+    else
+      @players = Player.where(source: params[:source], position: 'QB', stat_year: params[:year]).order('fpoints desc')
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @players }
@@ -33,7 +42,12 @@ class PlayersController < ApplicationController
     end
   end
   def runningbacks
-    @players = Player.where(source: params[:source].upcase, position: 'RB', stat_year: params[:year]).order('fpoints desc')
+    source = params[:source]
+    if source == "ALL"
+      @players = Player.where(position: 'RB').order('fpoints desc')
+    else
+      @players = Player.where(source: params[:source], position: 'RB', stat_year: params[:year]).order('fpoints desc')
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @players }
@@ -48,7 +62,12 @@ class PlayersController < ApplicationController
     end
   end
   def widereceivers
-    @players = Player.where(source: params[:source].upcase, position: 'WR', stat_year: params[:year]).order('fpoints desc')
+    source = params[:source]
+    if source == "ALL"
+      @players = Player.where(position: 'WR').order('fpoints desc')
+    else
+      @players = Player.where(source: params[:source], position: 'WR', stat_year: params[:year]).order('fpoints desc')
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @players }
@@ -63,7 +82,12 @@ class PlayersController < ApplicationController
     end
   end
   def tightends
-    @players = Player.where(source: params[:source].upcase, position: 'TE', stat_year: params[:year]).order('fpoints desc')
+    source = params[:source]
+    if source == "ALL"
+      @players = Player.where(position: 'TE').order('fpoints desc')
+    else
+      @players = Player.where(source: params[:source], position: 'TE', stat_year: params[:year]).order('fpoints desc')
+    end    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @players }
@@ -78,7 +102,12 @@ class PlayersController < ApplicationController
     end
   end
   def defenses
-    @players = Player.where(source: params[:source].upcase, position: 'D/ST', stat_year: params[:year]).order('fpoints desc')
+    source = params[:source]
+    if source == "ALL"
+      @players = Player.where(position: 'D/ST').order('fpoints desc')
+    else
+      @players = Player.where(source: params[:source], position: 'D/ST', stat_year: params[:year]).order('fpoints desc')
+    end   
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @players }
@@ -93,7 +122,12 @@ class PlayersController < ApplicationController
     end
   end
   def kickers
-    @players = Player.where(source: params[:source].upcase, position: 'K', stat_year: params[:year]).order('fpoints desc')
+    source = params[:source]
+    if source == "ALL"
+      @players = Player.where(position: 'K').order('fpoints desc')
+    else
+      @players = Player.where(source: params[:source], position: 'K', stat_year: params[:year]).order('fpoints desc')
+    end   
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @players }
@@ -189,11 +223,19 @@ class PlayersController < ApplicationController
     end
   end
   def cbs_scrap
-    Player.where(source: "CBS").delete_all
+    Player.where(:source => ['CBS', 'Jamey Eisenberg', 'Dave Richard']).delete_all
     player = Player.new
     @players = player.cbsDataPull
     respond_to do |format|
       format.html { redirect_to root_url, notice: 'CBS Players successfully imported' }
+    end
+  end
+  def nfl_scrap
+    Player.where(source: 'NFL').delete_all
+    player = Player.new
+    @players = player.nflDataPull
+    respond_to do |format|
+      format.html { redirect_to root_url, notice: 'NFL Players successfully imported' }
     end
   end
 end

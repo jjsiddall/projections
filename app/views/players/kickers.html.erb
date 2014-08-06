@@ -1,11 +1,14 @@
 <% 
   model_class = Player 
-  source = params[:source].upcase
+  source = params[:source]
   year = params[:year]
 %>
 
 <div class="page-header">
-  <h1><%= link_to "Kickers", kickers_players_path(source: source, year: year, format: "csv") %>: <%= year %> <%= source %></h1>
+  <h1>
+    <%= link_to "Kickers", kickers_players_path(source: source, year: year, format: "csv") %>
+    <small>Year: <%= year %> Source: <%= source %></small>
+  </h1>
 </div>
 <%= link_to "<i class='icon-white icon-backward'></i> Home".html_safe, root_path, :class => 'btn btn-mini btn-primary' %>
 <table class="table table-striped">

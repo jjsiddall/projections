@@ -1,24 +1,160 @@
 class Player < ActiveRecord::Base
-  attr_accessible :attempts, :completions, :fpoints, :fumble_recoveries, :fumble_lost, :source, :interceptions, :kicking_attempts_1_to_39, :kicking_attempts_40_to_49, :kicking_attempts_XP, :kicking_attempts_over_50, :kicking_attempts_total, :kicking_completions_1_to_39, :kicking_completions_40_to_49, :kicking_completions_XP, :kicking_completions_over_50, :kicking_completions_total, :name, :pass_tds, :pass_yards, :picture_url, :points_against, :position, :receiving_tds, :receiving_yards, :receptions, :rush_tds, :rush_yards, :rushes, :sacks, :stat_year, :targets, :team, :yards_against
+  attr_accessible :attempts, :completions, :fpoints, :fumble_recoveries, :fumble_lost, :source, :interceptions, :kicking_attempts_1_to_39, :kicking_attempts_40_to_49, :kicking_attempts_XP, :kicking_attempts_over_50, :kicking_attempts_total, :kicking_completions_1_to_39, :kicking_completions_40_to_49, :kicking_completions_XP, :kicking_completions_over_50, :kicking_completions_total, :name, :pass_tds, :pass_yards, :two_pt_conversions, :picture_url, :points_against, :position, :receiving_tds, :receiving_yards, :receptions, :rush_tds, :rush_yards, :rushes, :sacks, :stat_year, :targets, :team, :yards_against, :fumble_forced, :safety
+
+  	def nflDataPull(number_of_players = 100)
+  		(1..number_of_players).step(25) do |i|			
+			#QBs
+			url = "http://fantasy.nfl.com/research/projections?position=1&statType=seasonProjectedStats&offset="+ i.to_s				
+			nflPlayers(url)				
+			#RBs
+			url = "http://fantasy.nfl.com/research/projections?position=2&statType=seasonProjectedStats&offset="+ i.to_s				
+			nflPlayers(url)				
+			#WR
+			url = "http://fantasy.nfl.com/research/projections?position=3&statType=seasonProjectedStats&offset="+ i.to_s				
+			nflPlayers(url)			
+			#TE
+			url = "http://fantasy.nfl.com/research/projections?position=4&statType=seasonProjectedStats&offset="+ i.to_s				
+			nflPlayers(url)			
+		end  			
+  	end
+  	def nflPlayers(url)
+  		doc = getWebsiteAsNokogiriDoc(url)
+  		doc = doc.css(".odd") + doc.css(".even")
+  		doc.each do |nflPlayer|
+  			player = Player.new
+
+		 	player.source = "NFL"
+		 	player.stat_year = 2014
+
+  		 	player.name = nflPlayer.css(".playerName").text
+  			player.team = nflPlayer.css("em").text.split(" - ")[1]
+   		 	player.position = nflPlayer.css("em").text.split(" - ")[0]
+
+		    player.pass_yards = nflPlayer.css(".statId-5").text
+		    player.pass_tds = nflPlayer.css(".statId-6").text
+		    player.interceptions = nflPlayer.css(".statId-7").text
+
+		    player.rush_yards = nflPlayer.css(".statId-14").text
+		    player.rush_tds = nflPlayer.css(".statId-15").text
+
+		    player.receiving_yards = nflPlayer.css(".statId-21").text
+		    player.receiving_tds = nflPlayer.css(".statId-22").text
+
+		    player.forced_fumble = nflPlayer.css(".statId-29").text
+		    player.two_pt_conversions = nflPlayer.css(".statId-32").text
+
+		    player.fumble_lost = nflPlayer.css(".statId-30").text
+			player.fpoints = nflPlayer.css("td.last").text
+
+	  		player.save
+  		end
+  	end
+  	# def nflRunningbacks(url)
+  	# 	doc = getWebsiteAsNokogiriDoc(url)
+  	# 	doc = doc.css(".odd") + doc.css(".even")
+  	# 	doc.each do |nflPlayer|
+  	# 		player = Player.new
+
+   # 		 	player.position = "RB"
+		 # 	player.source = "NFL"
+		 # 	player.stat_year = 2014
+
+  	# 	 	player.name = nflPlayer.css(".playerName").text
+  	# 		player.team = nflPlayer.css("em").text.split(" - ")[1]
+
+		 #    player.rush_yards = nflPlayer.css(".statId-14").text
+		 #    player.rush_tds = nflPlayer.css(".statId-15").text
+
+
+
+		 #    player.two_pt_conversions = nflPlayer.css(".statId-32").text
+		 #    player.fumble_lost = nflPlayer.css(".statId-30").text
+		 #    player.fpoints = nflPlayer.css("td.last").text
+
+	  # 		player.save
+  	# 	end
+  	# end
+  	# def nflWidereceivers(url)
+  	# 	doc = getWebsiteAsNokogiriDoc(url)
+  	# 	doc = doc.css(".odd") + doc.css(".even")
+  	# 	doc.each do |nflPlayer|
+  	# 		player = Player.new
+
+   # 		 	player.position = "WR"
+		 # 	player.source = "NFL"
+		 # 	player.stat_year = 2014
+
+  	# 	 	player.name = nflPlayer.css(".playerName").text
+  	# 		player.team = nflPlayer.css("em").text.split(" - ")[1]
+
+		 #    player.rush_yards = nflPlayer.css(".statId-14").text
+		 #    player.rush_tds = nflPlayer.css(".statId-15").text
+
+		 #    player.receiving_yards = nflPlayer.css(".statId-21").text
+		 #    player.receiving_tds = nflPlayer.css(".statId-22").text
+
+		 #    player.two_pt_conversions = nflPlayer.css(".statId-32").text
+		 #    player.fumble_lost = nflPlayer.css(".statId-30").text
+		 #    player.fpoints = nflPlayer.css("td.last").text
+
+	  # 		player.save
+  	# 	end
+  	# end
 
   	def cbsDataPull
+		##### CBS Average
   		url = "http://fantasynews.cbssports.com/fantasyfootball/stats/weeklyprojections/QB/season/avg/standard?&print_rows=9999"
   		cbsQuarterbacks(url)
+   		url = "http://fantasynews.cbssports.com/fantasyfootball/stats/weeklyprojections/RB/season/avg/standard?&print_rows=9999"
+  		cbsRunningBacks(url)
   		url = "http://fantasynews.cbssports.com/fantasyfootball/stats/weeklyprojections/WR/season/avg/standard?&print_rows=9999"
-  		cbsWideReceivers(url)
+  		cbsWideReceivers(url, "WR")
+   		url = "http://fantasynews.cbssports.com/fantasyfootball/stats/weeklyprojections/TE/season/avg/standard?&print_rows=9999"
+  		cbsWideReceivers(url, "TE")
+   		url = "http://fantasynews.cbssports.com/fantasyfootball/stats/weeklyprojections/K/season/avg/standard"
+  		cbsKickers(url)
+   		url = "http://fantasynews.cbssports.com/fantasyfootball/stats/weeklyprojections/DST/season/avg/standard"
+  		cbsDefenses(url)
+
+		##### Jamey Eisenberg
+  		url = "http://fantasynews.cbssports.com/fantasyfootball/stats/weeklyprojections/QB/season/jamey_eisenberg/standard?&print_rows=9999"
+  		cbsQuarterbacks(url, "Jamey Eisenberg")
+   		url = "http://fantasynews.cbssports.com/fantasyfootball/stats/weeklyprojections/RB/season/jamey_eisenberg/standard?&print_rows=9999"
+  		cbsRunningBacks(url, "Jamey Eisenberg")
+  		url = "http://fantasynews.cbssports.com/fantasyfootball/stats/weeklyprojections/WR/season/jamey_eisenberg/standard?&print_rows=9999"
+  		cbsWideReceivers(url, "WR", "Jamey Eisenberg")
+   		url = "http://fantasynews.cbssports.com/fantasyfootball/stats/weeklyprojections/TE/season/jamey_eisenberg/standard?&print_rows=9999"
+  		cbsWideReceivers(url, "TE", "Jamey Eisenberg")
+   		url = "http://fantasynews.cbssports.com/fantasyfootball/stats/weeklyprojections/K/season/jamey_eisenberg/standard"
+  		cbsKickers(url, "Jamey Eisenberg")
+   		url = "http://fantasynews.cbssports.com/fantasyfootball/stats/weeklyprojections/DST/season/jamey_eisenberg/standard"
+  		cbsDefenses(url, "Jamey Eisenberg")
+
+		##### Dave Richard
+  		url = "http://fantasynews.cbssports.com/fantasyfootball/stats/weeklyprojections/QB/season/dave_richard/standard?&print_rows=9999"
+  		cbsQuarterbacks(url, "Dave Richard")
+   		url = "http://fantasynews.cbssports.com/fantasyfootball/stats/weeklyprojections/RB/season/dave_richard/standard?&print_rows=9999"
+  		cbsRunningBacks(url, "Dave Richard")
+  		url = "http://fantasynews.cbssports.com/fantasyfootball/stats/weeklyprojections/WR/season/dave_richard/standard?&print_rows=9999"
+  		cbsWideReceivers(url, "WR", "Dave Richard")
+   		url = "http://fantasynews.cbssports.com/fantasyfootball/stats/weeklyprojections/TE/season/dave_richard/standard?&print_rows=9999"
+  		cbsWideReceivers(url, "TE", "Dave Richard")
+   		url = "http://fantasynews.cbssports.com/fantasyfootball/stats/weeklyprojections/K/season/dave_richard/standard"
+  		cbsKickers(url, "Dave Richard")
+   		url = "http://fantasynews.cbssports.com/fantasyfootball/stats/weeklyprojections/DST/season/dave_richard/standard"
+  		cbsDefenses(url, "Dave Richard")
   	end
-  	def cbsQuarterbacks(url)
+  	def cbsQuarterbacks(url, source = "CBS")
   		doc = getWebsiteAsNokogiriDoc(url)
   		doc = doc.css(".row1") + doc.css(".row2")
   		doc.shift
-  		players = Array.new
   		doc.each do |cbsPlayer|
   			player = Player.new
   			playerStats = cbsPlayer.css("td")
   		 	player.name = playerStats[0].text.split(/,/)[0].strip
   			player.team = playerStats[0].text.split(/,/)[1].to_s.strip
   		 	player.position = "QB"
-		 	player.source = "CBS"
+		 	player.source = source
 		 	player.stat_year = 2014
 
 		    player.attempts = playerStats[1].text
@@ -33,36 +169,46 @@ class Player < ActiveRecord::Base
 		    player.fumble_lost = playerStats[12].text
 			player.fpoints = playerStats[13].text
 
-			# puts playerStats[1].text
-		 	# puts playerStats[2].text
-		 	# puts playerStats[3].text
-		 	# puts playerStats[4].text
-		 	# puts playerStats[5].text
-			# puts playerStats[6].text
-			# puts playerStats[7].text
-		    # puts playerStats[8].text
-		    # puts playerStats[9].text
-		    # puts playerStats[10].text
-		 	# puts playerStats[11].text
-			# puts playerStats[12].text
-			# puts playerStats[13].text
-
 	  		player.save
 
   		end
   	end
-  	def cbsWideReceivers(url)
+  	def cbsRunningBacks(url, source = "CBS")
   		doc = getWebsiteAsNokogiriDoc(url)
   		doc = doc.css(".row1") + doc.css(".row2")
   		doc.shift
   		players = Array.new
   		doc.each do |cbsPlayer|
+  			playerStats = cbsPlayer.css("td")
+  		 	player.name = playerStats[0].text.split(/,/)[0].strip
+  			player.team = playerStats[0].text.split(/,/)[1].to_s.strip
+  		 	player.position = "RB"
+		 	player.source = source
+		 	player.stat_year = 2014
+
+		    player.rushes = playerStats[1].text
+		    player.rush_yards = playerStats[2].text
+		    player.rush_tds = playerStats[4].text
+		    player.receptions = playerStats[5].text
+		    player.receiving_yards = playerStats[6].text
+		    player.receiving_tds = playerStats[8].text
+		    player.fumble_lost = playerStats[9].text
+		    player.fpoints = playerStats[10].text
+
+	  		player.save
+  		end
+  	end
+  	def cbsWideReceivers(url, position, source = "CBS")
+  		doc = getWebsiteAsNokogiriDoc(url)
+  		doc = doc.css(".row1") + doc.css(".row2")
+  		doc.shift
+  		doc.each do |cbsPlayer|
   			player = Player.new
   			playerStats = cbsPlayer.css("td")
   		 	player.name = playerStats[0].text.split(/,/)[0].strip
   			player.team = playerStats[0].text.split(/,/)[1].to_s.strip
-  		 	player.position = "WR"
-		 	player.source = "CBS"
+  		 	player.position = position
+		 	player.source = source
 		 	player.stat_year = 2014
 
 		    player.receptions = playerStats[1].text
@@ -70,12 +216,59 @@ class Player < ActiveRecord::Base
 		    player.receiving_tds = playerStats[4].text
 		    player.fumble_lost = playerStats[5].text
 			player.fpoints = playerStats[6].text
-			puts playerStats[6].text
 
 	  		player.save
 
   		end
   	end
+  	def cbsDefenses(url, source = "CBS")
+  		doc = getWebsiteAsNokogiriDoc(url)
+  		doc = doc.css(".row1") + doc.css(".row2")
+  		doc.each do |cbsPlayer|
+  			player = Player.new
+  			playerStats = cbsPlayer.css("td")
+  		 	player.name = playerStats[0].text.split(/,/)[0].strip
+  			player.team = playerStats[0].text.split(/,/)[1].to_s.strip
+
+		 	player.source = source
+		 	player.stat_year = 2014
+
+  		 	player.position = "D/ST"
+		    player.interceptions = playerStats[1].text
+		    player.fumble_recoveries = playerStats[2].text
+		    player.forced_fumble = playerStats[3].text
+		    player.sacks = playerStats[4].text
+		    player.rush_tds = playerStats[5].text
+		    player.safety = playerStats[6].text
+		    player.points_against = playerStats[7].text
+		    player.yards_against = playerStats[8].text
+		    player.fpoints = playerStats[9].text
+
+	  		player.save
+  		end
+  	end 
+  	def cbsKickers(url, source = "CBS")
+  		doc = getWebsiteAsNokogiriDoc(url)
+  		doc = doc.css(".row1") + doc.css(".row2")
+  		players = Array.new
+  		doc.each do |cbsPlayer|
+  			player = Player.new
+  			playerStats = cbsPlayer.css("td")
+  		 	player.name = playerStats[0].text.split(/,/)[0].strip
+  			player.team = playerStats[0].text.split(/,/)[1].to_s.strip
+
+		 	player.source = source
+		 	player.stat_year = 2014
+
+  		 	player.position = "K"
+		    player.kicking_completions_total = playerStats[1].text
+		    player.kicking_attempts_total = playerStats[2].text
+		    player.kicking_completions_XP = playerStats[3].text
+		    player.fpoints = playerStats[4].text
+
+	  		player.save
+  		end
+  	end  	
 
 	def espnDataPull
 		getESPNPlayers("Quarterbacks")
@@ -86,9 +279,7 @@ class Player < ActiveRecord::Base
 		getESPNPlayers("Kickers", 65)
 	end
 	def getESPNPlayers(player_type, number_of_players = 80)
-		allPlayers = Array.new
-		(0..number_of_players).step(15) do |i|
-			
+		(0..number_of_players).step(15) do |i|			
 			if player_type == "Quarterbacks"
 				puts "*******"
 				puts "Doing QBs"
@@ -121,14 +312,11 @@ class Player < ActiveRecord::Base
 				espnKickers(url)
 			end
 		end
-		return allPlayers
 	end
 	def espnQuarterbacks(url)
 		# get webpage data using Nokogiri
 		doc = getWebsiteAsNokogiriDoc(url)
 		
-		# declare and array to hold players (this will be what is returned)
-		players = Array.new
 		# interate through webpage
 		doc.css(".tableBody").each do |espnPlayer|
 
@@ -184,15 +372,11 @@ class Player < ActiveRecord::Base
 				player2.save
 		    end
 		end 
-		# puts players.count
-		return players
 	end	
 	def espnRunningBacks(url)
 		# get webpage data using Nokogiri
 		doc = getWebsiteAsNokogiriDoc(url)
 		
-		# declare and array to hold players (this will be what is returned)
-		players = Array.new
 		# interate through webpage
 		doc.css(".tableBody").each do |espnPlayer|
 
@@ -243,15 +427,11 @@ class Player < ActiveRecord::Base
 				player2.save
 		    end
 		end 
-		# puts players.count
-		return players
 	end
 	def espnWideReceivers(url)
 		# get webpage data using Nokogiri
 		doc = getWebsiteAsNokogiriDoc(url)
 		
-		# declare and array to hold players (this will be what is returned)
-		players = Array.new
 		# interate through webpage
 		doc.css(".tableBody").each do |espnPlayer|
 
@@ -304,14 +484,11 @@ class Player < ActiveRecord::Base
 				player2.save
 		    end
 		end
-		return players 
 	end
 	def espnDefenses(url)
 		# get webpage data using Nokogiri
 		doc = getWebsiteAsNokogiriDoc(url)
 		
-		# declare and array to hold players (this will be what is returned)
-		players = Array.new
 		# interate through webpage
 		doc.css(".tableBody").each do |espnPlayer|
 
@@ -362,14 +539,11 @@ class Player < ActiveRecord::Base
 				player2.save
 		    end
 		end 
-		return players
 	end
 	def espnKickers(url)
 		# get webpage data using Nokogiri
 		doc = getWebsiteAsNokogiriDoc(url)
 		
-		# declare and array to hold players (this will be what is returned)
-		players = Array.new
 		# interate through webpage
 		doc.css(".tableBody").each do |espnPlayer|
 
@@ -429,7 +603,6 @@ class Player < ActiveRecord::Base
 				player2.save
 		    end
 		end 
-		return players
 	end		
 	def parseESPNPlayerName(player_name)
 		if (player_name.split(/,/)[0].count ".").to_i > 1

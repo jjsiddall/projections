@@ -7,34 +7,74 @@
 <table class="table table-condensed">
   <tbody>
     <tr>
-      <td><h4>ESPN</h4></td>
-      <td><%= link_to "All", players_path(source: "espn", year: "2014"), :class => 'btn btn-primary' %></td>
-      <td><%= link_to "QB", quarterbacks_players_path(source: "espn", year: "2014"), :class => 'btn' %></td>
-      <td><%= link_to "RB", runningbacks_players_path(source: "espn", year: "2014"), :class => 'btn' %></td>
-      <td><%= link_to "WR", widereceivers_players_path(source: "espn", year: "2014"), :class => 'btn' %></td>
-      <td><%= link_to "TE", tightends_players_path(source: "espn", year: "2014"), :class => 'btn' %></td>
-      <td><%= link_to "DST", defenses_players_path(source: "espn", year: "2014"), :class => 'btn' %></td>
-      <td><%= link_to "K", kickers_players_path(source: "espn", year: "2014"), :class => 'btn' %></td>
+      <td><h4>ESPN.com</h4></td>
+      <td><%= link_to "All", players_path(source: "ESPN", year: "2014"), :class => 'btn btn-primary' %></td>
+      <td><%= link_to "QB", quarterbacks_players_path(source: "ESPN", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "RB", runningbacks_players_path(source: "ESPN", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "WR", widereceivers_players_path(source: "ESPN", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "TE", tightends_players_path(source: "ESPN", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "DST", defenses_players_path(source: "ESPN", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "K", kickers_players_path(source: "ESPN", year: "2014"), :class => 'btn' %></td>
     </tr>
     <tr>
-      <td><h4>CBS</h4></td>
-      <td><%= link_to "All", players_path(source: "cbs", year: "2014"), :class => 'btn btn-primary' %></td>
-      <td><%= link_to "QB", quarterbacks_players_path(source: "cbs", year: "2014"), :class => 'btn' %></td>
-      <td><%= link_to "RB", runningbacks_players_path(source: "cbs", year: "2014"), :class => 'btn' %></td>
-      <td><%= link_to "WR", widereceivers_players_path(source: "cbs", year: "2014"), :class => 'btn' %></td>
-      <td><%= link_to "TE", tightends_players_path(source: "cbs", year: "2014"), :class => 'btn' %></td>
-      <td><%= link_to "DST", defenses_players_path(source: "cbs", year: "2014"), :class => 'btn' %></td>
-      <td><%= link_to "K", kickers_players_path(source: "cbs", year: "2014"), :class => 'btn' %></td>
+      <td><h4>CBS.com</h4></td>
+      <td><%= link_to "All", players_path(source: "CBS", year: "2014"), :class => 'btn btn-primary' %></td>
+      <td><%= link_to "QB", quarterbacks_players_path(source: "CBS", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "RB", runningbacks_players_path(source: "CBS", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "WR", widereceivers_players_path(source: "CBS", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "TE", tightends_players_path(source: "CBS", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "DST", defenses_players_path(source: "CBS", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "K", kickers_players_path(source: "CBS", year: "2014"), :class => 'btn' %></td>
     </tr>
     <tr>
-      <td><h4>2013 Actuals</h4></td>
-      <td><%= link_to "All", players_path(source: "espn",year: "2013"), :class => 'btn btn-primary' %></td>
-      <td><%= link_to "QB", quarterbacks_players_path(source: "espn", year: "2013"), :class => 'btn' %></td>
-      <td><%= link_to "RB", runningbacks_players_path(source: "espn", year: "2013"), :class => 'btn' %></td>
-      <td><%= link_to "WR", widereceivers_players_path(source: "espn", year: "2013"), :class => 'btn' %></td>
-      <td><%= link_to "TE", tightends_players_path(source: "espn", year: "2013"), :class => 'btn' %></td>
-      <td><%= link_to "DST", defenses_players_path(source: "espn", year: "2013"), :class => 'btn' %></td>
-      <td><%= link_to "K", kickers_players_path(source: "espn", year: "2013"), :class => 'btn' %></td>
+      <td><h4>NFL.com</h4></td>
+      <td><%= link_to "All", players_path(source: "NFL", year: "2014"), :class => 'btn btn-primary' %></td>
+      <td><%= link_to "QB", quarterbacks_players_path(source: "NFL", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "RB", runningbacks_players_path(source: "NFL", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "WR", widereceivers_players_path(source: "NFL", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "TE", tightends_players_path(source: "NFL", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "DST", defenses_players_path(source: "NFL", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "K", kickers_players_path(source: "NFL", year: "2014"), :class => 'btn' %></td>
+    </tr>
+    <tr>
+      <td><h4>Jamey Eisenberg (CBS)</h4></td>
+      <td><%= link_to "All", players_path(source: "Jamey Eisenberg", year: "2014"), :class => 'btn btn-primary' %></td>
+      <td><%= link_to "QB", quarterbacks_players_path(source: "Jamey Eisenberg", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "RB", runningbacks_players_path(source: "Jamey Eisenberg", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "WR", widereceivers_players_path(source: "Jamey Eisenberg", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "TE", tightends_players_path(source: "Jamey Eisenberg", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "DST", defenses_players_path(source: "Jamey Eisenberg", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "K", kickers_players_path(source: "Jamey Eisenberg", year: "2014"), :class => 'btn' %></td>
+    </tr>
+    <tr>
+      <td><h4>Dave Richard (CBS)</h4></td>
+      <td><%= link_to "All", players_path(source: "Dave Richard", year: "2014"), :class => 'btn btn-primary' %></td>
+      <td><%= link_to "QB", quarterbacks_players_path(source: "Dave Richard", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "RB", runningbacks_players_path(source: "Dave Richard", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "WR", widereceivers_players_path(source: "Dave Richard", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "TE", tightends_players_path(source: "Dave Richard", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "DST", defenses_players_path(source: "Dave Richard", year: "2014"), :class => 'btn' %></td>
+      <td><%= link_to "K", kickers_players_path(source: "Dave Richard", year: "2014"), :class => 'btn' %></td>
+    </tr>
+    <tr>
+      <td><h4>2013 Actuals (ESPN)</h4></td>
+      <td><%= link_to "All", players_path(source: "ESPN",year: "2013"), :class => 'btn btn-primary' %></td>
+      <td><%= link_to "QB", quarterbacks_players_path(source: "ESPN", year: "2013"), :class => 'btn' %></td>
+      <td><%= link_to "RB", runningbacks_players_path(source: "ESPN", year: "2013"), :class => 'btn' %></td>
+      <td><%= link_to "WR", widereceivers_players_path(source: "ESPN", year: "2013"), :class => 'btn' %></td>
+      <td><%= link_to "TE", tightends_players_path(source: "ESPN", year: "2013"), :class => 'btn' %></td>
+      <td><%= link_to "DST", defenses_players_path(source: "ESPN", year: "2013"), :class => 'btn' %></td>
+      <td><%= link_to "K", kickers_players_path(source: "ESPN", year: "2013"), :class => 'btn' %></td>
+    </tr>
+    <tr>
+      <td><h4>All</h4></td>
+      <td><%= link_to "All", players_path(source: "ALL",year: "ALL"), :class => 'btn btn-primary' %></td>
+      <td><%= link_to "All QBs", quarterbacks_players_path(source: "ALL", year: "ALL"), :class => 'btn' %></td>
+      <td><%= link_to "All RBs", runningbacks_players_path(source: "ALL", year: "ALL"), :class => 'btn' %></td>
+      <td><%= link_to "All WRs", widereceivers_players_path(source: "ALL", year: "ALL"), :class => 'btn' %></td>
+      <td><%= link_to "All TEs", tightends_players_path(source: "ALL", year: "ALL"), :class => 'btn' %></td>
+      <td><%= link_to "All DSTs", defenses_players_path(source: "ALL", year: "ALL"), :class => 'btn' %></td>
+      <td><%= link_to "All Ks", kickers_players_path(source: "ALL", year: "ALL"), :class => 'btn' %></td>
     </tr>
 
   </tbody>

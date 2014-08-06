@@ -1,11 +1,14 @@
 <% 
   model_class = Player 
-  source = params[:source].upcase
+  source = params[:source]
   year = params[:year]
 %>
 
 <div class="page-header">
-  <h1><%= link_to "Defenses", defenses_players_path(source: source, year: year, format: "csv") %>: <%= year %> <%= source %></h1>
+  <h1>
+    <%= link_to "Defenses", defenses_players_path(source: source, year: year, format: "csv") %>
+    <small>Year: <%= year %> Source: <%= source %></small>
+  </h1>
 </div>
 <%= link_to "<i class='icon-white icon-backward'></i> Home".html_safe, root_path, :class => 'btn btn-mini btn-primary' %>
 <table class="table table-striped">
@@ -15,7 +18,9 @@
       <th>TDs</th>
       <th>Interceptions</th>
       <th>Sacks</th>
+      <th>Forced Fumbles</th>
       <th>Fumble Recoveries</th>
+      <th>Safety</th>
       <th>Points Against</th>
       <th>Yards Against</th>
       <th>Points</th>
@@ -24,11 +29,13 @@
   <tbody>
     <% @players.each do |player| %>
       <tr>
-        <td><%= player.team %></td>
+        <td><%= player.name %></td>
         <td><%= player.rush_tds %></td>
         <td><%= player.interceptions %></td>
         <td><%= player.sacks %></td>
+        <td><%= player.forced_fumble %></td>
         <td><%= player.fumble_recoveries %></td>
+        <td><%= player.safety %></td>
         <td><%= player.points_against %></td>
         <td><%= player.yards_against %></td>
         <td><%= player.fpoints %></td>
