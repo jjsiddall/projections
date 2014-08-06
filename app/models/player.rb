@@ -15,7 +15,61 @@ class Player < ActiveRecord::Base
 			#TE
 			url = "http://fantasy.nfl.com/research/projections?position=4&statType=seasonProjectedStats&offset="+ i.to_s				
 			nflPlayers(url)			
+			#K
+			url = "http://fantasy.nfl.com/research/projections?position=7&statType=seasonProjectedStats&offset="+ i.to_s				
+			nflKickers(url)			
+			#DEF
+			url = "http://fantasy.nfl.com/research/projections?position=8&statType=seasonProjectedStats&offset="+ i.to_s				
+			nflDefenses(url)			
 		end  			
+  	end
+  	def nflDefenses(url)
+  		doc = getWebsiteAsNokogiriDoc(url)
+  		doc = doc.css(".odd") + doc.css(".even")
+  		doc.each do |nflPlayer|
+  			player = Player.new
+
+		 	player.source = "NFL"
+		 	player.stat_year = 2014
+
+  		 	player.name = nflPlayer.css(".playerName").text
+  			player.team = nflPlayer.css("em").text.split(" - ")[1]
+   		 	player.position = "D/ST"
+
+		    player.sacks = nflPlayer.css(".statId-45").text
+		    player.interceptions = nflPlayer.css(".statId-46").text
+		    player.fumble_recoveries = nflPlayer.css(".statId-47").text
+		    player.safety = nflPlayer.css(".statId-49").text
+		    player.rush_tds = nflPlayer.css(".statId-50").text
+		    player.points_against = nflPlayer.css(".statId-54").text
+
+			player.fpoints = nflPlayer.css("td.last").text
+
+	  		player.save
+  		end
+  	end
+  	def nflKickers(url)
+  		doc = getWebsiteAsNokogiriDoc(url)
+  		doc = doc.css(".odd") + doc.css(".even")
+  		doc.each do |nflPlayer|
+  			player = Player.new
+
+		 	player.source = "NFL"
+		 	player.stat_year = 2014
+
+  		 	player.name = nflPlayer.css(".playerName").text
+  			player.team = nflPlayer.css("em").text.split(" - ")[1]
+   		 	player.position = nflPlayer.css("em").text.split(" - ")[0]
+
+		    player.kicking_completions_XP = nflPlayer.css(".statId-33").text
+		    player.kicking_completions_1_to_39 = nflPlayer.css(".statId-35").text.to_i + nflPlayer.css(".statId-36").text.to_i + nflPlayer.css(".statId-37").text.to_i
+		    player.kicking_completions_40_to_49 = nflPlayer.css(".statId-38").text
+		    player.kicking_completions_over_50 = nflPlayer.css(".statId-39").text
+
+			player.fpoints = nflPlayer.css("td.last").text
+
+	  		player.save
+  		end
   	end
   	def nflPlayers(url)
   		doc = getWebsiteAsNokogiriDoc(url)
@@ -49,57 +103,6 @@ class Player < ActiveRecord::Base
 	  		player.save
   		end
   	end
-  	# def nflRunningbacks(url)
-  	# 	doc = getWebsiteAsNokogiriDoc(url)
-  	# 	doc = doc.css(".odd") + doc.css(".even")
-  	# 	doc.each do |nflPlayer|
-  	# 		player = Player.new
-
-   # 		 	player.position = "RB"
-		 # 	player.source = "NFL"
-		 # 	player.stat_year = 2014
-
-  	# 	 	player.name = nflPlayer.css(".playerName").text
-  	# 		player.team = nflPlayer.css("em").text.split(" - ")[1]
-
-		 #    player.rush_yards = nflPlayer.css(".statId-14").text
-		 #    player.rush_tds = nflPlayer.css(".statId-15").text
-
-
-
-		 #    player.two_pt_conversions = nflPlayer.css(".statId-32").text
-		 #    player.fumble_lost = nflPlayer.css(".statId-30").text
-		 #    player.fpoints = nflPlayer.css("td.last").text
-
-	  # 		player.save
-  	# 	end
-  	# end
-  	# def nflWidereceivers(url)
-  	# 	doc = getWebsiteAsNokogiriDoc(url)
-  	# 	doc = doc.css(".odd") + doc.css(".even")
-  	# 	doc.each do |nflPlayer|
-  	# 		player = Player.new
-
-   # 		 	player.position = "WR"
-		 # 	player.source = "NFL"
-		 # 	player.stat_year = 2014
-
-  	# 	 	player.name = nflPlayer.css(".playerName").text
-  	# 		player.team = nflPlayer.css("em").text.split(" - ")[1]
-
-		 #    player.rush_yards = nflPlayer.css(".statId-14").text
-		 #    player.rush_tds = nflPlayer.css(".statId-15").text
-
-		 #    player.receiving_yards = nflPlayer.css(".statId-21").text
-		 #    player.receiving_tds = nflPlayer.css(".statId-22").text
-
-		 #    player.two_pt_conversions = nflPlayer.css(".statId-32").text
-		 #    player.fumble_lost = nflPlayer.css(".statId-30").text
-		 #    player.fpoints = nflPlayer.css("td.last").text
-
-	  # 		player.save
-  	# 	end
-  	# end
 
   	def cbsDataPull
 		##### CBS Average
